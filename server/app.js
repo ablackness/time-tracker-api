@@ -44,6 +44,7 @@ app.get('/', function(req, res) {
 })
 
 app.use('/api/employees', require('../db/routes/employees'));
-app.use('/api/jobs', require('../db/routes/jobs'))
+app.use('/api/jobs', require('../db/routes/jobs'));
+app.use('/api/users', require('../db/routes/users'));
 
 module.exports = app;
