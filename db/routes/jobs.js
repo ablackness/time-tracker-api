@@ -1,5 +1,5 @@
 const express = require('express');
-const router = expres.Router();
+const router = express.Router();
 const db = require('../models/index');
 const checkJwt = require('./jwt');
 const jwtAuthz = require('express-jwt-authz');
