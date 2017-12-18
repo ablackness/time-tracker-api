@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
-const checkJwt = require('../../server/app');
+const checkJwt = require('./jwt');
 const jwtAuthz = require('express-jwt-authz');
 
 router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
