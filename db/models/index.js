@@ -16,6 +16,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     })
 
 const Employee = sequelize.import(__dirname + '/employee.js');
+const Job = sequelize.import(__dirname + '/job.js');
 
 sequelize.authenticate().then( () => console.log('Connected to Database TimeTracker')).catch(err => console.log(err));
 

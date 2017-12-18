@@ -43,37 +43,7 @@ app.get('/', function(req, res) {
     res.status(200).send('HELLLO WORLD');
 })
 
-
-app.get('/api/employees', checkJwt, jwtAuthz(['read:info']), function (req, res) {
-    db.Employee
-    .findAll()
-        .then(employees => {
-            res.status(200).json(employees);
-        })
-})
-
-app.get('/api/employee/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
-    db.Employee
-    .findById(req.params.id)
-    .then( employee => {
-        if(!employee) {
-            res.status(404).send('No employee found');
-        } else {
-            res.status(200).json(employee);
-        }
-    })
-})
-
-app.post('/api/employee/add', checkJwt, jwtAuthz(['write:info']), function (req, res) {
-    var employee = req.body;
-    console.log(employee)
-    db.Employee
-    .create(employee)
-    .then( employee => {
-        console.log('ID:', employee.EmployeeID);
-        res.status(201).json(employee.EmployeeID);
-    })
-})
-
+app.use('/api/employees', require('../db/routes/employees'));
+app.use('/api/jobs', require('../db/routes/jobs'))
 
 module.exports = app;
