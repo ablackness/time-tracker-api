@@ -1,6 +1,8 @@
 const express = require('express');
 const router = expres.Router();
 const db = require('../models/index');
+const checkJwt = require('../../server/app');
+const jwtAuthz = require('express-jwt-authz');
 
 router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     db.Job

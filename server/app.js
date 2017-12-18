@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
     next();
 })
 
-const checkJwt = jwt({
+export const checkJwt = jwt({
     // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
     secret: jwksRsa.expressJwtSecret({
         cache: true,
