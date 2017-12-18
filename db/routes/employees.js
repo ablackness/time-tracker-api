@@ -8,6 +8,7 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     db.Employee
     .findAll()
         .then(employees => {
+            console.log(employees);
             res.status(200).json(employees);
         })
 })
