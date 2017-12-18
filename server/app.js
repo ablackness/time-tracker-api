@@ -71,7 +71,7 @@ app.post('/api/employee/add', checkJwt, jwtAuthz(['write:info']), function (req,
     .create(employee)
     .then( employee => {
         console.log('ID:', employee.EmployeeID);
-        res.status(201).json(employee.Employee);
+        res.status(201).json(employee.EmployeeID);
     })
 })
 
