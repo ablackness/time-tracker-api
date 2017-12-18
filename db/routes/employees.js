@@ -9,7 +9,11 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     .findAll()
         .then(employees => {
             console.log(employees[0].dataValues);
-            res.status(200).json(employees);
+            var results = employees.map( e => {
+                return e.dataValues;
+            })
+            console.log(results);
+            res.status(200).json(results);
         })
 })
 
