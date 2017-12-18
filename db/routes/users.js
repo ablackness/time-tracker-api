@@ -61,3 +61,5 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
         }  
     })
 })
+
+module.exports = router;
