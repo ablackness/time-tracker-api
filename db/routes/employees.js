@@ -11,8 +11,7 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
             var results = employees.map( e => {
                 return e.dataValues;
             })
-            console.log(results);
-            res.status(200).send({employees: results,test: 'value'});
+            res.status(200).send({employees: results});
         })
 })
 
