@@ -14,7 +14,7 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
             })
             if (req.headers.origin === 'mobile') {
                 res.status(200).send({employees: results});
-            } else if (req.headers.origin === 'web') {
+            } else if (req.headers.origin === 'Web') {
                 res.status(200).send(results);
             }
             
