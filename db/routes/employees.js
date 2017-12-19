@@ -26,9 +26,8 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
     .findById(req.params.id)
     .then( employee => {
         console.log(employee);
-        var results = employee.map( e => {
-            return e.dataValues;
-        })
+        var results = [employee.dataValues];
+        
         if(!employee) {
             res.status(404).send('No employee found');
         } else {
