@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models/index');
-const checkJwt = require('./jwt');
+const checkJwt = require('../utils/jwt');
 const jwtAuthz = require('express-jwt-authz');
 
 router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
@@ -12,9 +12,9 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
             var results = employees.map( e => {
                 return e.dataValues;
             })
-            if (req.headers.origin === 'mobile') {
-                res.status(200).send({employees: results});
-            } else if (req.headers.origin === 'Web') {
+            if (req.headers.origin.toUpperCase() === 'MOBILE') {
+                res.status(200).send({value: results});
+            } else if (req.headers.origin.toUpperCase() === 'WEB') {
                 res.status(200).send(results);
             }
             
@@ -25,10 +25,17 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
     db.Employee
     .findById(req.params.id)
     .then( employee => {
+        var results = employee.map( e => {
+            return e.dataValues;
+        })
         if(!employee) {
             res.status(404).send('No employee found');
         } else {
-            res.status(200).json(employee);
+            if (req.headers.origin.toUpperCase() === 'MOBILE') {
+                res.status(200).send({value: results});
+            } else if (req.headers.origin.toUpperCase() === 'WEB') {
+                res.status(200).send(results);
+            }
         }
     })
 })
