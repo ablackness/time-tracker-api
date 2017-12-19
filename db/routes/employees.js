@@ -12,7 +12,12 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
             var results = employees.map( e => {
                 return e.dataValues;
             })
-            res.status(200).send({employees: results});
+            if (req.headers.origin === 'mobile') {
+                res.status(200).send({employees: results});
+            } else if (req.headers.origin === 'web') {
+                res.status(200).send(results);
+            }
+            
         })
 })
 
