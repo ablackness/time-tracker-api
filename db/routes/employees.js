@@ -5,6 +5,7 @@ const checkJwt = require('./jwt');
 const jwtAuthz = require('express-jwt-authz');
 
 router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
+    console.log('Headers', req.headers);
     db.Employee
     .findAll()
         .then(employees => {
