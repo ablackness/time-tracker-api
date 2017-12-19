@@ -12,7 +12,7 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
                 return e.dataValues;
             })
             console.log(results);
-            res.status(200).send({results});
+            res.status(200).send({employees: results});
         })
 })
 
