@@ -25,6 +25,7 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
     db.Employee
     .findById(req.params.id)
     .then( employee => {
+        console.log(employee);
         var results = employee.map( e => {
             return e.dataValues;
         })
