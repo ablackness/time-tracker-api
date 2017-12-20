@@ -1,31 +1,27 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('department', {
-    DepartmentID: {
+  return sequelize.define('job', {
+    JobID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    DepartmentAbbreviation: {
+    JobName: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    DepartmentName: {
+    JobDescription: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    DepartmentDescription: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    DepartmentCompanyID: {
+    JobDepartmentID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'company',
-        key: 'CompanyID'
+        model: 'department',
+        key: 'DepartmentID'
       }
     },
     created_by: {
@@ -49,6 +45,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: '(getdate())'
     }
   }, {
-    tableName: 'department'
+    tableName: 'job',
+    timestamps: false
   });
 };

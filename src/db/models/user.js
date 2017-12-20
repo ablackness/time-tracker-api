@@ -1,29 +1,48 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('company', {
-    CompanyID: {
+  return sequelize.define('user', {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    CompanyAbbreviation: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    CompanyName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    CompanyDescription: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    admin_level: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'admin_level',
+        key: 'admin_level_id'
+      }
+    },
+    company_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'company',
+        key: 'CompanyID'
+      }
     },
     created_by: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: '(user_name())'
+      allowNull: false
     },
     created_date: {
       type: DataTypes.DATE,
@@ -32,8 +51,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     modified_by: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: '(user_name())'
+      allowNull: false
     },
     modified_date: {
       type: DataTypes.DATE,
@@ -41,6 +59,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: '(getdate())'
     }
   }, {
-    tableName: 'company'
+    tableName: 'user',
+    timestamps: false
   });
 };

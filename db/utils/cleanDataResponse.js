@@ -1,3 +1,0 @@
-function cleanDataResponse (response) {
-    
-}
