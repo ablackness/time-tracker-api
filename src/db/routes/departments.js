@@ -5,7 +5,7 @@ import handleResponse from '../utils/handleResponse';
 import checkJwt from '../utils/jwt';
 import db from '../models/index';
 
-router.get('/', /*checkJwt, jwtAuthz(['read:info']),*/ function (req, res) {
+router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     db.Department
     .findAll()
         .then(departments => {

@@ -7,6 +7,7 @@ import db from '../models/index';
 var employeeCache = {};
 const cacheRefreshTime = 86400;
 
+//route to get all employees from DB -  will use cache if it is available and not expired
 router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     if (employeeCache && (Date.now() - employeeCache.updatedTime < cacheRefreshTime) ) {
         console.log('getting data from cache');

@@ -28,6 +28,7 @@ app.get('/', function(req, res) {
     res.status(200).send('HELLLO WORLD');
 })
 
+//set up routers
 app.use('/api/employees', require('../db/routes/employees'));
 app.use('/api/jobs', require('../db/routes/jobs'));
 app.use('/api/users', require('../db/routes/users'));
