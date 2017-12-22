@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
@@ -24,7 +25,5 @@
     "sequelize": "^4.28.6",
     "tedious": "^2.1.5"
   },
-  "devDependencies": {
-    "babel-preset-env": "^1.6.1"
-  }
+  "devDependencies": {}
 }
