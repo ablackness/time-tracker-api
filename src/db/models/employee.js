@@ -1,3 +1,5 @@
+import { truncateSync } from "fs";
+
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
@@ -39,8 +41,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     created_date: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: '(getdate())'
+      allowNull: true
     },
     modified_by: {
       type: DataTypes.STRING,
@@ -49,8 +50,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     modified_date: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: '(getdate())'
+      allowNull: true
     }
   }, {
     tableName: 'employee',

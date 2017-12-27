@@ -23,6 +23,9 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
 
 router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var department = req.body;
+    var d = new Date();
+    department.created_date = d;
+    department.modified_date = d;
     db.Department
     .create(department)
     .then( department => {
@@ -32,12 +35,19 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
 
 router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var department = req.body;
+    const d = new Date();
+    department.modified_date = d;
     db.Department
     .update(department, {
         where: {id: req.params.id}
     })
     .then( department => {
-        handleResponse(department, req, res);   
+        if(result[0] === 0) {
+            res.status(404).send('No department found');
+        } else {
+            res.status(200).send('Department with ID ' + req.params.id + ' updated!');
+        }
+        // handleResponse(department, req, res);   
     })
 })
 

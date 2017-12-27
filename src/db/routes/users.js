@@ -23,6 +23,9 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
 
 router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var user = req.body;
+    var d = new Date();
+    user.created_date = d;
+    user.modified_date = d;
     db.User
     .create(user)
     .then( user => {
@@ -32,12 +35,20 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
 
 router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var user = req.body;
+    const d = new Date();
+    user.modified_date = d;
     db.User
     .update(user, {
         where: {id: req.params.id}
     })
     .then( user => {
-        handleResponse(user, req, res);   
+        if(result[0] === 0) 
+        {
+            res.status(404).send('No employee found');
+        } else {
+            res.status(200).send('User with ID ' + req.params.id + ' updated!');
+        }
+        // handleResponse(user, req, res);   
     })
 })
 

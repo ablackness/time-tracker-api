@@ -23,6 +23,9 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
 
 router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var job = req.body;
+    var d = new Date();
+    job.created_date = d;
+    job.modified_date = d;
     db.Job
     .create(job)
     .then( job => {
@@ -32,12 +35,19 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
 
 router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var job = req.body;
+    const d = new Date();
+    job.modified_date = d;
     db.Job
     .update(job, {
         where: {id: req.params.id}
     })
-    .then( job => {
-        handleResponse(job, req, res);  
+    .then( result => {
+        if(result[0] === 0) {
+            res.status(404).send('No job found');
+        } else {
+            res.status(200).send('Job with ID ' + req.params.id + ' updated!');
+        }
+        // handleResponse(job, req, res);  
     })
 })
 

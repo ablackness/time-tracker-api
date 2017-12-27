@@ -23,6 +23,9 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
 
 router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var company = req.body;
+    var d = new Date();
+    company.created_date = d;
+    company.modified_date = d;
     db.Company
     .create(company)
     .then( company => {
@@ -32,12 +35,19 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
 
 router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var company = req.body;
+    const d = new Date();
+    company.modified_date = d;
     db.Company
     .update(company, {
         where: {id: req.params.id}
     })
     .then( company => {
-        handleResponse(company, req, res);  
+        if(result[0] === 0) {
+            res.status(404).send('No company found');
+        } else {
+            res.status(200).send('Compnay with ID ' + req.params.id + ' updated!');
+        }
+        // handleResponse(company, req, res);  
     })
 })
 
