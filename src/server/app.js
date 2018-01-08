@@ -35,5 +35,6 @@ app.use('/api/users', require('../db/routes/users'));
 app.use('/api/companies', require('../db/routes/companies'));
 app.use('/api/departments', require('../db/routes/departments'));
 app.use('/api/adminLevels', require('../db/routes/adminLevels'));
+app.use('/api/employeeJobs', require('../db/routes/employeeJobs'));
 
 module.exports = app;
