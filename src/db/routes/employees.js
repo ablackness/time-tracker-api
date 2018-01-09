@@ -63,13 +63,12 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
         where: {EmployeeID: req.params.id}
     })
     .then( result => {
-        console.log(result);
         if(result[0] === 0) 
         {
-            res.status(404).send(result);
+            res.status(404).json(result[0]);
         } else {
             employeeCache.needsToUpdate = true;
-            res.status(200).send(result);
+            res.status(200).json(result[0]);
         }
     })
 })
