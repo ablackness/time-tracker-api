@@ -65,10 +65,10 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     .then( result => {
         if(result[0] === 0) 
         {
-            res.status(404).send('No employee found');
+            res.status(404).send(result);
         } else {
             employeeCache.needsToUpdate = true;
-            res.status(200).send('Employee ID ' + req.params.id + ' updated!');
+            res.status(200).send(result);
         }
         // handleResponse(employee, req, res); 
     })
@@ -81,9 +81,12 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
         if (!employee) {
             res.status(404).send('No employee found.');
         } else {
-            employee.destroy();
-            employeeCache.needsToUpdate = true;
-            res.status(200).json(employee);
+            employee.destroy()
+            .then( result => {
+                console.log(result);
+            })
+            // employeeCache.needsToUpdate = true;
+            // res.status(200).json(employee);
         }  
     })
 })
