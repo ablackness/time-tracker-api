@@ -26,6 +26,7 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var d = new Date();
     company.created_date = d;
     company.modified_date = d;
+    company.CompanyID = null;
     db.Company
     .create(company)
     .then( company => {

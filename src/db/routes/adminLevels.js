@@ -23,6 +23,7 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
 
 router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var adminLevel = req.body;
+    adminLevel.admin_level_id = null;
     db.AdminLevel
     .create(adminLevel)
     .then( adminLevel => {

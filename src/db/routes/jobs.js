@@ -26,6 +26,7 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var d = new Date();
     job.created_date = d;
     job.modified_date = d;
+    job.JobID = null;
     db.Job
     .create(job)
     .then( job => {
