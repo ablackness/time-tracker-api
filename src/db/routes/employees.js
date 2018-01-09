@@ -79,12 +79,12 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .then( employee => {
         if (!employee) {
             // to log later
-            res.status(404).send([0]);
+            res.status(404).send(0);
         } else {
             employee.destroy()
             .then( result => {
                 employeeCache.needsToUpdate = true;
-                res.status(200).json([1]);
+                res.status(200).json(1);
             })
             
         }  
