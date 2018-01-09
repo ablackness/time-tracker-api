@@ -63,6 +63,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
         where: {EmployeeID: req.params.id}
     })
     .then( result => {
+        console.log(result);
         if(result[0] === 0) 
         {
             res.status(404).send(result);
@@ -70,7 +71,6 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
             employeeCache.needsToUpdate = true;
             res.status(200).send(result);
         }
-        // handleResponse(employee, req, res); 
     })
 })
 
@@ -79,14 +79,15 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .findById(req.params.id)
     .then( employee => {
         if (!employee) {
-            res.status(404).send('No employee found.');
+            // to log later
+            res.status(404).send([0]);
         } else {
             employee.destroy()
             .then( result => {
-                console.log(result);
+                employeeCache.needsToUpdate = true;
+                res.status(200).json([1]);
             })
-            // employeeCache.needsToUpdate = true;
-            // res.status(200).json(employee);
+            
         }  
     })
 })
