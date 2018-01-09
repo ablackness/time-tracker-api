@@ -42,13 +42,12 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     .update(company, {
         where: {id: req.params.id}
     })
-    .then( company => {
+    .then( result => {
         if(result[0] === 0) {
-            res.status(404).send('No company found');
+            res.status(404).json(result[0]);
         } else {
-            res.status(200).send('Compnay with ID ' + req.params.id + ' updated!');
+            res.status(200).json(result[0]);
         }
-        // handleResponse(company, req, res);  
     })
 })
 
@@ -57,10 +56,12 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .findById(req.params.id)
     .then( company => {
         if (!company) {
-            res.status(404).send('No company found. Invalid ID.');
+            res.status(404).send(0);
         } else {
             company.destroy()
-            res.status(200).json(company);
+            .then( result => {
+                res.status(200).json(1);
+            })
         }  
     })
 })

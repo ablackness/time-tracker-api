@@ -42,14 +42,12 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     .update(user, {
         where: {id: req.params.id}
     })
-    .then( user => {
-        if(result[0] === 0) 
-        {
-            res.status(404).send('No employee found');
+    .then( result => {
+        if(result[0] === 0) {
+            res.status(404).json(result[0]);
         } else {
-            res.status(200).send('User with ID ' + req.params.id + ' updated!');
+            res.status(200).json(result[0]);
         }
-        // handleResponse(user, req, res);   
     })
 })
 
@@ -58,10 +56,12 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .findById(req.params.id)
     .then( user => {
         if (!user) {
-            res.status(404).send('No user found. Invalid ID.');
+            res.status(404).send(0);
         } else {
             user.destroy()
-            res.status(200).json(user);
+            .then( result => {
+                res.status(200).json(1);
+            })
         }  
     })
 })

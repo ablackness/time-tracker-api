@@ -37,8 +37,13 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     .update(adminLevel, {
         where: {id: req.params.id}
     })
-    .then( adminLevel => {
-        handleResponse(adminLevel, req, res);   
+    .then( result => {
+        if(result[0] === 0) 
+        {
+            res.status(404).json(result[0]);
+        } else {
+            res.status(200).json(result[0]);
+        }
     })
 })
 
@@ -47,10 +52,12 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .findById(req.params.id)
     .then( adminLevel => {
         if (!adminLevel) {
-            res.status(404).send('No adminLevel found. Invalid ID.');
+            res.status(404).send(0);
         } else {
             adminLevel.destroy()
-            res.status(200).json(adminLevel);
+            .then( result => {
+                res.status(200).json(1);
+            })
         }  
     })
 })

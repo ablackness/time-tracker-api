@@ -44,11 +44,10 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     })
     .then( result => {
         if(result[0] === 0) {
-            res.status(404).send('No employee job found');
+            res.status(404).json(result[0]);
         } else {
-            res.status(200).send('Employee Job with ID ' + req.params.id + ' updated!');
+            res.status(200).json(result[0]);
         }
-        // handleResponse(job, req, res);  
     })
 })
 
@@ -57,11 +56,13 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .findById(req.params.id)
     .then( employeeJob => {
         if (!employeeJob) {
-            res.status(404).send('No employee job found. Invalid ID.');
+            res.status(404).send(0);
         } else {
             employeeJob.destroy()
-            res.status(200).json(job);
-        }  employeeJob
+            .then( result => {
+                res.status(200).json(1);
+            })
+        }
     })
 })
 

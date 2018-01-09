@@ -42,13 +42,12 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     .update(department, {
         where: {id: req.params.id}
     })
-    .then( department => {
+    .then( result => {
         if(result[0] === 0) {
-            res.status(404).send('No department found');
+            res.status(404).json(result[0]);
         } else {
-            res.status(200).send('Department with ID ' + req.params.id + ' updated!');
+            res.status(200).json(result[0]);
         }
-        // handleResponse(department, req, res);   
     })
 })
 
@@ -57,10 +56,12 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     .findById(req.params.id)
     .then( department => {
         if (!department) {
-            res.status(404).send('No department found. Invalid ID.');
+            res.status(404).send(0);
         } else {
             department.destroy()
-            res.status(200).json(department);
+            .then( result => {
+                res.status(200).json(1);
+            })
         }  
     })
 })
