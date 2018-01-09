@@ -16,7 +16,7 @@ function formatResponse (values, req) {
         if (req.method === 'POST') {
             results = values;
         } else {
-            results = values.dataValues;
+            results = [values.dataValues];
         } 
     }
 
