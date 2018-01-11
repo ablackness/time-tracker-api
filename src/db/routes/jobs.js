@@ -5,12 +5,19 @@ import handleResponse from '../utils/handleResponse';
 import checkJwt from '../utils/jwt';
 import db from '../models/index';
 
-router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
+router.get('/',/* checkJwt, jwtAuthz(['read:info']),*/ function (req, res) {
     db.Job
     .findAll()
         .then(jobs => {
             handleResponse(jobs, req, res);
         })
+})
+
+router.get('/employee/:id', /*checkJwt, jwtAuthz(['read:info']), */function(req, res) {
+    db.sequelize.query("exec GetJobsByEmployee :empID;",{replacements: {empID: req.params.id}, type: db.sequelize.QueryTypes.SELECT})
+    .then( jobs => {
+        res.status(200).json(jobs);
+    })
 })
 
 router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {

@@ -2,7 +2,7 @@
 // process.env.DB_USER, 
 // process.env.DB_PASSWORD, {
 //     host: process.env.DB_SERVER,
-const prodFlag = true;
+const prodFlag = false;
 var DB_CONFIG = {};
 
 if (prodFlag) {
@@ -20,5 +20,7 @@ if (prodFlag) {
         DB_SERVER: '184.168.194.78'
     }
 }
-
+//user: ttDev
+// PW: kP16jYX5Ia7S
+//cac.matteblackdesigns.com
 module.exports = DB_CONFIG;

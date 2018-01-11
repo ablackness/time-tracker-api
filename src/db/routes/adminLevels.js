@@ -35,7 +35,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var adminLevel = req.body;
     db.AdminLevel
     .update(adminLevel, {
-        where: {id: req.params.id}
+        where: {admin_level_id: req.params.id}
     })
     .then( result => {
         if(result[0] === 0) 

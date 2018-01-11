@@ -40,7 +40,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     company.modified_date = d;
     db.Company
     .update(company, {
-        where: {id: req.params.id}
+        where: {CompanyID: req.params.id}
     })
     .then( result => {
         if(result[0] === 0) {

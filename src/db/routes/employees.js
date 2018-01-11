@@ -10,7 +10,7 @@ employeeCache.needsToUpdate = true;
 const cacheRefreshTime = 86400;
 
 //route to get all employees from DB -  will use cache if it is available and not expired
-router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
+router.get('/', /*checkJwt, jwtAuthz(['read:info']), */function (req, res) {
     if (Date.now() - employeeCache.updatedTime > cacheRefreshTime) {
         employeeCache.needsToUpdate = true;
     }
@@ -31,7 +31,7 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     
 })
 
-router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
+router.get('/:id', /*checkJwt, jwtAuthz(['read:info']),*/function (req, res) {
     db.Employee
     .findById(req.params.id)
     .then( employee => {
@@ -40,7 +40,7 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
 })
 
 
-router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
+router.post('/', /*checkJwt, jwtAuthz(['write:info']),*/ function (req, res) {
     var employee = req.body;
     var d = new Date();
     employee.created_date = d;
@@ -54,7 +54,7 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     })
 })
 
-router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
+router.put('/:id',/* checkJwt, jwtAuthz(['write:info']),*/ function(req, res) {
     var employee = req.body;
     const d = new Date();
     employee.modified_date = d;
@@ -73,7 +73,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     })
 })
 
-router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
+router.delete('/:id', /*checkJwt, jwtAuthz(['delete:info']), */function(req, res) {
     db.Employee
     .findById(req.params.id)
     .then( employee => {

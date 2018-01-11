@@ -31,6 +31,7 @@ const Company = sequelize.import(__dirname + '/company.js');
 const Department = sequelize.import(__dirname + '/department.js');
 const AdminLevel = sequelize.import(__dirname + '/admin_level.js');
 const EmployeeJob = sequelize.import(__dirname + '/employee_job.js');
+const TimeEntry = sequelize.import(__dirname + '/time_entry.js');
 
 sequelize.authenticate().then( () => console.log('Connected to Database TimeTracker')).catch(err => console.log(err));
 
@@ -43,7 +44,8 @@ db = {
     Company,
     Department,
     AdminLevel,
-    EmployeeJob
+    EmployeeJob,
+    TimeEntry
 }
 
 module.exports = db;
