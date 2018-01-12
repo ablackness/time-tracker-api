@@ -35,7 +35,7 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
         IsClockedIn: 1
     }
     console.log('body', body.EmployeeJobID, body)
-    if (body.employeeJobID === null) {
+    if (body.employeeJobID === 'nil') {
         console.log('employee job ID is null');
         var employeeJob = {
             EmployeeID: body.EmployeeID,
@@ -93,10 +93,10 @@ router.put('/', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var timeEntry = req.body;
     timeEntry.modified_date = d;
     timeEntry.EndTime = d;
-    timeaEntry.IsClockedIn = 0;
+    timeEntry.IsClockedIn = 0;
     db.TimeEntry
     .update(timeEntry, {
-        where: {EmployeeJobID: body.EmployeeJobID, IsClockedIn: 1 }
+        where: {EmployeeID: body.EmployeeID, IsClockedIn: 1 }
     })
     .then( result => {
         if(result[0] === 0) {
