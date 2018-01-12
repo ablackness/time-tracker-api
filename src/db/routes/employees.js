@@ -3,8 +3,10 @@ const router = express.Router();
 const jwtAuthz = require('express-jwt-authz');
 const Seqeulize = require('sequelize');
 import handleResponse from '../utils/handleResponse';
+import handleSPResponse from '../utils/handleSPResponse';
 import checkJwt from '../utils/jwt';
 import db from '../models/index';
+import handleBooleanResponse from '../utils/handleBooleanResponse';
 var employeeCache = {};
 employeeCache.needsToUpdate = true;
 const cacheRefreshTime = 86400;
@@ -33,22 +35,14 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
 router.get('/clockedIn', checkJwt, jwtAuthz(['read:info']), function(req, res) {
     db.sequelize.query('exec GetClockedInEmployees', {type: db.sequelize.QueryTypes.SELECT})
     .then( employees => {
-        if (req.headers.origin) {
-            res.status(200).json(employees);
-        } else {
-            res.status(200).json({ value: employees})
-        }
+        handleSPResponse(employees, req, res);
     })
 })
 
 router.get('/clockedOut', checkJwt, jwtAuthz(['read:info']), function(req, res) {
     db.sequelize.query('exec GetClockedOutEmployees', {type: db.sequelize.QueryTypes.SELECT})
     .then( employees => {
-        if (req.headers.origin) {
-            res.status(200).json(employees);
-        } else {
-            res.status(200).json({ value: employees})
-        }
+        handleSPResponse(employees, req, res);
     })
 })
 

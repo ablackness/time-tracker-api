@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwtAuthz = require('express-jwt-authz');
 import handleResponse from '../utils/handleResponse';
+import handleBooleanResponse from '../utils/handleBooleanResponse';
 import checkJwt from '../utils/jwt';
 import db from '../models/index';
 
@@ -39,9 +40,9 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
         var employeeJob = {
             EmployeeID: body.EmployeeID,
             JobID: body.JobID,
-            created_by: body.created_by,
+            created_by: 'Mobile Clock In',
             created_date: d,
-            modified_by: body.modified_by,
+            modified_by: 'Mobile Clock In',
             modified_date: d
         }
         console.log('employee job',employeeJob);
@@ -55,7 +56,15 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
             db.TimeEntry
             .create(timeEntry)
             .then( timeEntry => {
-                handleResponse(timeEntry.TimeEntryID, req, res);
+                handleBooleanResponse(timeEntry, req, res);
+                // if (!timeEntry) {
+                //     res.status(404).send(0);
+                // } else {
+                //     timeEntry.destroy()
+                //     .then( result => {
+                //         res.status(200).json(1);
+                //     })
+                // }
             })
         })
     } else {
@@ -66,12 +75,20 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
         db.TimeEntry
         .create(timeEntry)
         .then( timeEntry => {
-            handleResponse(timeEntry.TimeEntryID, req, res);
+            handleBooleanResponse(timeEntry, req, res);
+            // if (!timeEntry) {
+            //     res.status(404).send(0);
+            // } else {
+            //     timeEntry.destroy()
+            //     .then( result => {
+            //         res.status(200).json(1);
+            //     })
+            // }
         })
     }   
 })
 
-router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
+router.put('/', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     const d = new Date();
     var timeEntry = req.body;
     timeEntry.modified_date = d;
@@ -79,7 +96,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     timeaEntry.IsClockedIn = 0;
     db.TimeEntry
     .update(timeEntry, {
-        where: {TimeEntryID: req.params.id}
+        where: {EmployeeJobID: body.EmployeeJobID, IsClockedIn: 1 }
     })
     .then( result => {
         if(result[0] === 0) {
@@ -94,14 +111,15 @@ router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     db.TimeEntry
     .findById(req.params.id)
     .then( timeEntry => {
-        if (!timeEntry) {
-            res.status(404).send(0);
-        } else {
-            timeEntry.destroy()
-            .then( result => {
-                res.status(200).json(1);
-            })
-        }
+        handleBooleanResponse(timeEntry, req, res);
+        // if (!timeEntry) {
+        //     res.status(404).send(0);
+        // } else {
+        //     timeEntry.destroy()
+        //     .then( result => {
+        //         res.status(200).json(1);
+        //     })
+        // }
     })
 })
 
