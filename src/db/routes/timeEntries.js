@@ -88,7 +88,8 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     }   
 })
 
-router.put('/', checkJwt, jwtAuthz(['write:info']), function(req, res) {
+router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
+    console.log(req.body)
     const d = new Date();
     var timeEntry = req.body;
     timeEntry.modified_date = d;
