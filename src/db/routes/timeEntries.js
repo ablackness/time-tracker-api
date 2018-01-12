@@ -93,6 +93,7 @@ router.put('/', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     const d = new Date();
     var timeEntry = req.body;
     timeEntry.modified_date = d;
+    timeEntry.modified_by = 'Mobile Clock Out';
     timeEntry.EndTime = d;
     timeEntry.IsClockedIn = 0;
     db.TimeEntry
