@@ -76,6 +76,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var timeEntry = req.body;
     timeEntry.modified_date = d;
     timeEntry.EndTime = d;
+    timeaEntry.IsClockedIn = 0;
     db.TimeEntry
     .update(timeEntry, {
         where: {TimeEntryID: req.params.id}
