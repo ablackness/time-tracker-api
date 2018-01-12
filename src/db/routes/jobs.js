@@ -13,7 +13,7 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
         })
 })
 
-router.get('/employee/:id', /*checkJwt, jwtAuthz(['read:info']), */function(req, res) {
+router.get('/employee/:id', checkJwt, jwtAuthz(['read:info']), function(req, res) {
     db.sequelize.query("exec GetJobsByEmployee :empID;",{replacements: {empID: req.params.id}, type: db.sequelize.QueryTypes.SELECT})
     .then( jobs => {
         if (req.headers.origin) {
