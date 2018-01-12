@@ -32,7 +32,7 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
         modified_by: 'Mobile Clock In',
         modified_date: d,
         StartTime: d,
-        Active: 1
+        IsClockedIn: 1
     }
     console.log('body', body.EmployeeJobID, body)
     if (body.employeeJobID === null) {
