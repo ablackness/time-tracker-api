@@ -35,7 +35,7 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
         IsClockedIn: 1
     }
     console.log('body', body.EmployeeJobID, body)
-    if (body.employeeJobID === 'butthole') {
+    if (body.EmployeeJobID === 'nil') {
         console.log('employee job ID is null');
         var employeeJob = {
             EmployeeID: body.EmployeeID,
