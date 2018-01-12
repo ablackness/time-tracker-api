@@ -5,7 +5,7 @@ import handleResponse from '../utils/handleResponse';
 import checkJwt from '../utils/jwt';
 import db from '../models/index';
 
-router.get('/',/* checkJwt, jwtAuthz(['read:info']), */function (req, res) {
+router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     db.EmployeeJob
     .findAll()
         .then(employeeJobs => {
@@ -21,7 +21,7 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
     })
 })
 
-router.post('/', /*checkJwt, jwtAuthz(['write:info']),*/ function (req, res) {
+router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var employeeJob = req.body;
     var d = new Date();
     employeeJob.created_date = d;
@@ -51,7 +51,7 @@ router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     })
 })
 
-router.delete('/:id',/* checkJwt, jwtAuthz(['delete:info']),*/ function(req, res) {
+router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     db.EmployeeJob
     .findById(req.params.id)
     .then( employeeJob => {

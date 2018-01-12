@@ -5,7 +5,7 @@ import handleResponse from '../utils/handleResponse';
 import checkJwt from '../utils/jwt';
 import db from '../models/index';
 
-router.get('/',/* checkJwt, jwtAuthz(['read:info']), */function (req, res) {
+router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
     db.TimeEntry
     .findAll()
         .then(timeEntries => {
@@ -21,7 +21,7 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
     })
 })
 
-router.post('/',/* checkJwt, jwtAuthz(['write:info']),*/ function (req, res) {
+router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var body = req.body;
     var d = new Date();
     var timeEntry = {
@@ -71,7 +71,7 @@ router.post('/',/* checkJwt, jwtAuthz(['write:info']),*/ function (req, res) {
     }   
 })
 
-router.put('/:id',/* checkJwt, jwtAuthz(['write:info']), */function(req, res) {
+router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     var timeEntry = req.body;
     const d = new Date();
     timeEntry.modified_date = d;
@@ -88,7 +88,7 @@ router.put('/:id',/* checkJwt, jwtAuthz(['write:info']), */function(req, res) {
     })
 })
 
-router.delete('/:id',/* checkJwt, jwtAuthz(['delete:info']),*/ function(req, res) {
+router.delete('/:id', checkJwt, jwtAuthz(['delete:info']), function(req, res) {
     db.TimeEntry
     .findById(req.params.id)
     .then( timeEntry => {

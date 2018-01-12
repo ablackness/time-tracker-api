@@ -2,7 +2,7 @@
 // process.env.DB_USER, 
 // process.env.DB_PASSWORD, {
 //     host: process.env.DB_SERVER,
-const prodFlag = false;
+const prodFlag = true;
 var DB_CONFIG = {};
 
 if (prodFlag) {
