@@ -27,9 +27,9 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     var d = new Date();
     var timeEntry = {
         TimeEntryID: null,
-        created_by: body.created_by,
+        created_by: 'Mobile Clock In',
         created_date: d,
-        modified_by: body.modified_by,
+        modified_by: 'Mobile Clock In',
         modified_date: d,
         StartTime: d,
         Active: 1
