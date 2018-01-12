@@ -27,8 +27,21 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
             employeeCache.needsToUpdate = false;
             handleResponse(employees, req, res);
         })
-    }
-    
+    }  
+})
+
+router.get('/clockedIn', checkJwt, jwtAuthz(['read:info']), function(req, res) {
+    db.sequelize.query('exec GetClockedInEmployees', {type: db.sequelize.QueryTypes.SELECT})
+    .then( employees => {
+        res.status(200).json(employees);
+    })
+})
+
+router.get('/clockedOut', checkJwt, jwtAuthz(['read:info']), function(req, res) {
+    db.sequelize.query('exec GetClockedOutEmployees', {type: db.sequelize.QueryTypes.SELECT})
+    .then( employees => {
+        res.status(200).json(employees);
+    })
 })
 
 router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
