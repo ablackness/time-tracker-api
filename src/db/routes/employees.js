@@ -36,7 +36,7 @@ router.get('/clockedIn', checkJwt, jwtAuthz(['read:info']), function(req, res) {
         if (req.headers.origin) {
             res.status(200).json(employees);
         } else {
-            res.status(200).json({ values: employees})
+            res.status(200).json({ value: employees})
         }
     })
 })
@@ -47,7 +47,7 @@ router.get('/clockedOut', checkJwt, jwtAuthz(['read:info']), function(req, res) 
         if (req.headers.origin) {
             res.status(200).json(employees);
         } else {
-            res.status(200).json({ values: employees})
+            res.status(200).json({ value: employees})
         }
     })
 })

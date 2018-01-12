@@ -72,9 +72,10 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
 })
 
 router.put('/:id', checkJwt, jwtAuthz(['write:info']), function(req, res) {
-    var timeEntry = req.body;
     const d = new Date();
+    var timeEntry = req.body;
     timeEntry.modified_date = d;
+    timeEntry.EndTime = d;
     db.TimeEntry
     .update(timeEntry, {
         where: {TimeEntryID: req.params.id}
