@@ -88,6 +88,28 @@ router.post('/', checkJwt, jwtAuthz(['write:info']), function (req, res) {
     }   
 })
 
+
+router.post('/clockOut', checkJwt, jwtAuthz(['write:info']), function(req, res) {
+    console.log(req.body)
+    const d = new Date();
+    var timeEntry = req.body;
+    timeEntry.modified_date = d;
+    timeEntry.modified_by = 'Mobile Clock Out';
+    timeEntry.EndTime = d;
+    timeEntry.IsClockedIn = 0;
+    db.TimeEntry
+    .update(timeEntry, {
+        where: {TimeEntryID: body.TimeEntryID}
+    })
+    .then( result => {
+        if(result[0] === 0) {
+            res.status(404).json(result[0]);
+        } else {
+            res.status(200).json(result[0]);
+        }
+    })
+})
+
 router.put('/', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     console.log(req.body)
     const d = new Date();
