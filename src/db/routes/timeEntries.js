@@ -96,7 +96,7 @@ router.put('/', checkJwt, jwtAuthz(['write:info']), function(req, res) {
     timeEntry.IsClockedIn = 0;
     db.TimeEntry
     .update(timeEntry, {
-        where: {EmployeeID: body.EmployeeID, IsClockedIn: 1 }
+        where: {TimeEntryID: body.TimeEntryID}
     })
     .then( result => {
         if(result[0] === 0) {
