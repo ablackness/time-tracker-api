@@ -33,14 +33,22 @@ router.get('/', checkJwt, jwtAuthz(['read:info']), function (req, res) {
 router.get('/clockedIn', checkJwt, jwtAuthz(['read:info']), function(req, res) {
     db.sequelize.query('exec GetClockedInEmployees', {type: db.sequelize.QueryTypes.SELECT})
     .then( employees => {
-        res.status(200).json(employees);
+        if (req.headers.origin) {
+            res.status(200).json(employees);
+        } else {
+            res.status(200).json({ values: employees)
+        }
     })
 })
 
 router.get('/clockedOut', checkJwt, jwtAuthz(['read:info']), function(req, res) {
     db.sequelize.query('exec GetClockedOutEmployees', {type: db.sequelize.QueryTypes.SELECT})
     .then( employees => {
-        res.status(200).json(employees);
+        if (req.headers.origin) {
+            res.status(200).json(employees);
+        } else {
+            res.status(200).json({ values: employees)
+        }
     })
 })
 
