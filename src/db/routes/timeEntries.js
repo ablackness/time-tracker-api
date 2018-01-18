@@ -22,12 +22,11 @@ router.get('/:id', checkJwt, jwtAuthz(['read:info']),function (req, res) {
     })
 })
 
-router.get('/employee/:id', checkJwt, jwtAuthz(['read:info']), function(req, res) {
-    var d = new Date();
-    var e = new Date();
-    e.setDate(d.getDate() - 3);
+router.post('/employee', checkJwt, jwtAuthz(['read:info']), function(req, res) {
+    var start = new Date(req.body.start);
+    var end = new Date(req.body.end);
     db.sequelize.query('exec GetTimeEntriesByEmployeeID :empID, :payPeriodStart, :payPeriodEnd', 
-        {replacements: {empID: req.params.id, payPeriodStart: e, payPeriodEnd: d},
+        {replacements: {empID: req.body.EmployeeID, payPeriodStart: start, payPeriodEnd: end},
          type: db.sequelize.QueryTypes.SELECT
         })
         .then(timeEntries => {
